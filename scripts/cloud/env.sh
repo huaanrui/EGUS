@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+export PATH="/root/conda-envs/egus/bin:$PATH"
+export PYTHONPATH="/root/mechanism${PYTHONPATH:+:$PYTHONPATH}"
+export HF_ENDPOINT=https://hf-mirror.com
+export HF_HOME=/hy-tmp/hf-cache
+export HF_HUB_DISABLE_XET=1
+export HF_HUB_DOWNLOAD_TIMEOUT=180
+export HF_HUB_ETAG_TIMEOUT=60
+export OMP_NUM_THREADS=8
+export TOKENIZERS_PARALLELISM=false

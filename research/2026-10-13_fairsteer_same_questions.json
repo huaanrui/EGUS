@@ -1,0 +1,26 @@
+{
+  "scope": "Descriptive reaggregation on identical 384 questions and native answer order, zero-shot; training exposure and prompt/dtype differ, NOT held-out for new model",
+  "rows": 384,
+  "results": {
+    "old_baseline": {
+      "overall": 0.5651041666666666,
+      "ambig": 0.4270833333333333,
+      "disambig": 0.703125
+    },
+    "old_edited": {
+      "overall": 0.6354166666666666,
+      "ambig": 0.5833333333333334,
+      "disambig": 0.6875
+    },
+    "new_baseline": {
+      "overall": 0.6432291666666666,
+      "ambig": 0.609375,
+      "disambig": 0.6770833333333334
+    },
+    "new_edited": {
+      "overall": 0.734375,
+      "ambig": 0.7916666666666666,
+      "disambig": 0.6770833333333334
+    }
+  }
+}

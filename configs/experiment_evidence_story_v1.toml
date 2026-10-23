@@ -1,0 +1,30 @@
+seed = 20261017
+output_dir = 'results/evidence_story_20261017_v1'
+data_dir = 'data/prepared/evidence_story_20261017_v1'
+source_data = 'data/prepared/fairsteer_author_qwen3_v1'
+split_file = 'data/prepared/fairsteer_improve_20261013_v2/splits.json'
+batch_size = 8
+cpu_threads = 4
+max_tokens = 2048
+fit_per_condition_category = 100
+fit_budgets = [220, 1100, 2200]
+direction_per_category = 10
+counterfactual_pairs_per_category = 8
+stress_per_condition_category = 2
+alphas = [1.0, 1.5]
+primary_alpha = 1.5
+gate_fpr_limit = 0.02
+bootstrap_replicates = 2000
+probe_C = 1.0
+probe_max_iter = 10000
+probe_tol = 0.0001
+
+[[models]]
+name = 'qwen3'
+path = 'F:\LLMs\Qwen3-1.7B'
+layer = 18
+
+[[models]]
+name = 'minicpm5'
+path = 'F:\LLMs\MiniCPM5-2B'
+layer = 28

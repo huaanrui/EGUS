@@ -1,0 +1,81 @@
+# Research specification. Only [dataset] is consumed by prepare_bbq.py today.
+schema_version = 1
+status = "planned_not_run"
+
+[dataset]
+repository = "nyu-mll/BBQ"
+revision = "bea11bd97d79217245b5871acd247b9d6eb24598"
+categories = ["Age", "Gender_identity", "SES"]
+split_seed = 20261009
+fit_fraction = 0.60
+selection_fraction = 0.20
+validation_fraction = 0.20
+# Cap within each family × context condition × question polarity × label type.
+pilot_rows_per_stratum = 4
+# Fit-only expansion after observing too few stable stereotype predictions.
+fit_rows_per_stratum = 8
+family_mapping = "configs/bbq_template_families.json"
+raw_dir = "data/raw/bbq"
+output_dir = "data/prepared/bbq_pilot_v4"
+
+[model]
+path = 'F:\LLMs\Qwen3-1.7B'
+dtype = "bfloat16"
+quantization = "none"
+batch_size = 1
+thinking = false
+max_input_tokens = 512
+overlength_policy = "fail_and_report_do_not_truncate"
+freeze_weights = true
+
+[task]
+language = "en"
+answer_mode = "candidate_sequence_log_probability"
+answer_labels = ["A", "B", "C"]
+answer_permutations = [[0, 1, 2], [1, 2, 0], [2, 0, 1]]
+activation_site = "last_prompt_token"
+primary_intervention_scope = "last_prompt_token"
+fit_positive = "ambiguous_stereotype_prediction_stable_across_permutations"
+fit_negative = "ambiguous_unknown_prediction_stable_across_permutations"
+min_examples_per_class = 40
+min_template_groups_per_class = 8
+mean_source = "all_fit_examples_without_labels"
+selection_unit = "global_frozen_component_set_per_model_and_method"
+
+[search]
+seed = 20261009
+candidate_layers_zero_based = [3, 7, 11, 15, 19, 23, 27]
+max_selection_configurations_per_method = 32
+neuron_k = [16, 64, 256, 1024]
+layer_width = [1, 2, 4]
+direction_strength_sd = [-2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0]
+interpolation_strength = [0.25, 0.5, 0.75, 1.0]
+random_control_seeds = [11, 23, 37, 51, 67]
+bootstrap_replicates = 2000
+
+[selection]
+objective = "maximize_macro_ambiguous_accuracy_under_utility_constraints"
+max_disambiguated_accuracy_drop = 0.02
+max_category_disambiguated_accuracy_drop = 0.05
+max_neutral_control_accuracy_drop = 0.02
+max_neutral_control_abstention_increase = 0.02
+tie_break = "lower_normalized_perturbation_then_lower_runtime"
+fallback = "report_no_feasible_intervention"
+validation_can_select_hyperparameters = false
+
+[methods]
+planned = ["dim_direction", "linear_cav", "sn_mlp_adapted", "layer_span_adapted", "relp_mlp_nodes"]
+diagnostic_extensions = ["scav_boundary_shift", "sn_attention_adapted", "layer_parameter_scaling", "relp_edges"]
+sae = false
+
+[evaluation]
+primary_operation = "remove_selected_component"
+secondary_operation = "retain_selected_component_within_explicit_universe"
+metrics = ["ambiguous_accuracy", "stereotype_rate", "counterstereotype_rate", "signed_bbq_bias", "disambiguated_accuracy", "disambiguated_overabstention", "category_metrics", "permutation_consistency", "neutral_control_accuracy", "normalized_perturbation", "peak_vram", "runtime"]
+cluster_bootstrap_unit = "template_group_id"
+validation_output_policy = "one_frozen_configuration_per_method_plus_preregistered_controls"
+
+[implementation]
+status = "data_preparation_only"
+completed = ["pinned_source_download", "metadata_join_checks", "group_splits", "pilot_sampling", "manifest_and_hashes"]
+pending = ["manual_label_audit", "neutral_control_dataset", "model_smoke_test", "baseline", "activation_hooks", "method_selectors", "interventions", "validation_report"]

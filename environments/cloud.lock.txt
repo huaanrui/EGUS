@@ -1,0 +1,102 @@
+accelerate @ file:///root/mechanism/offline_wheels/accelerate-1.15.0-py3-none-any.whl#sha256=97eacca0b73e45cb867dbf8c5d5d4dc32219544300e0c8992c7334dc2ef33cec
+annotated-doc @ file:///root/mechanism/offline_wheels/annotated_doc-0.0.5-py3-none-any.whl#sha256=117bac03a25ede5df5440e855b32d556049ca169ead221505badf432fed4b101
+annotated-types @ file:///croot/annotated-types_1709542908624/work
+anyio==4.15.1
+archspec @ file:///croot/archspec_1709217642129/work
+boltons @ file:///croot/boltons_1737061692168/work
+Brotli @ file:///croot/brotli-split_1736182456865/work
+certifi @ file:///croot/certifi_1738623731865/work/certifi
+cffi @ file:///croot/cffi_1736182485317/work
+charset-normalizer @ file:///croot/charset-normalizer_1721748349566/work
+click @ file:///root/mechanism/offline_wheels/click-8.5.0-py3-none-any.whl#sha256=255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360
+cloudpickle @ file:///root/mechanism/offline_wheels/cloudpickle-3.1.2-py3-none-any.whl#sha256=9acb47f6afd73f60dc1df93bb801b472f05ff42fa6c84167d25cb206be1fbf4a
+conda-content-trust @ file:///croot/conda-content-trust_1714483159009/work
+conda-package-handling @ file:///croot/conda-package-handling_1731369017509/work
+conda_package_streaming @ file:///croot/conda-package-streaming_1731366181659/work
+contourpy @ file:///root/mechanism/offline_wheels/contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl#sha256=875f42444c9cf48d56f724f2637e60d0f73b3b12c9041e1484580a233edf9591
+cryptography @ file:///croot/cryptography_1732129644106/work
+cycler @ file:///root/mechanism/offline_wheels/cycler-0.12.1-py3-none-any.whl#sha256=85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30
+distro @ file:///croot/distro_1714488253808/work
+einops @ file:///root/mechanism/offline_wheels/einops-0.8.2-py3-none-any.whl#sha256=54058201ac7087911181bfec4af6091bb59380360f069276601256a76af08193
+filelock==3.32.3
+fonttools @ file:///root/mechanism/offline_wheels/fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl#sha256=eb3c98cac93aac4b9f6e3ce2008325340b234cc9b0338ca6b513f31962a1e278
+frozendict @ file:///croot/frozendict_1713194832637/work
+fsspec==2026.7.0
+h11 @ file:///root/mechanism/offline_wheels/h11-0.16.0-py3-none-any.whl#sha256=63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86
+hf-xet @ file:///root/mechanism/offline_wheels/hf_xet-1.7.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl#sha256=2814a6e999d13464c4d679b788cc5d784eb5a4edfc638a31f10e9a11ab531ef8
+httpcore==1.0.9
+httpx==0.28.1
+huggingface_hub @ file:///root/mechanism/offline_wheels/huggingface_hub-1.33.0-py3-none-any.whl#sha256=04e434b06e100eddbce9a6e817d72693a7884b10a79bd67ab48080d5c07eb899
+idna @ file:///croot/idna_1714398848350/work
+Jinja2==3.1.6
+joblib @ file:///root/mechanism/offline_wheels/joblib-1.6.0-py3-none-any.whl#sha256=3dbbf9f6e4b592a2357b854608e980fe6390d131d7a82f011a377ef2ebef7aba
+jsonpatch @ file:///croot/jsonpatch_1714483231291/work
+jsonpointer==2.1
+kiwisolver @ file:///root/mechanism/offline_wheels/kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl#sha256=34633ecf50d16187ab8e5528b7a2530f2feb4e23f300db4672538b51cfc5cd38
+libmambapy @ file:///croot/mamba-split_1734469461757/work/libmambapy
+markdown-it-py @ file:///work/perseverance-python-buildout/croot/markdown-it-py_1698846045803/work
+MarkupSafe==3.0.3
+matplotlib @ file:///root/mechanism/offline_wheels/matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl#sha256=df4f7784aca81a94f254c0a2767d592ee25f407e488f5fa7203e51093fb6ca27
+mdurl @ file:///work/perseverance-python-buildout/croot/mdurl_1698845653285/work
+menuinst @ file:///croot/menuinst_1738943416351/work
+mpmath==1.3.0
+narwhals @ file:///root/mechanism/offline_wheels/narwhals-2.27.1-py3-none-any.whl#sha256=d057df13f5852b8e157596e82eb5e955fad267425df5e420e0ee9863da483b31
+networkx==3.6.1
+numpy @ file:///root/mechanism/offline_wheels/numpy-2.5.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl#sha256=b7e18c623bb5c95acb3b3328861272816ba199fb531921c5d6d0b675f1fde9e3
+nvidia-cublas-cu12==12.4.5.8
+nvidia-cuda-cupti-cu12==12.4.127
+nvidia-cuda-nvrtc-cu12==12.4.127
+nvidia-cuda-runtime-cu12==12.4.127
+nvidia-cudnn-cu12==9.1.0.70
+nvidia-cufft-cu12==11.2.1.3
+nvidia-curand-cu12==10.3.5.147
+nvidia-cusolver-cu12==11.6.1.9
+nvidia-cusparse-cu12==12.3.1.170
+nvidia-cusparselt-cu12==0.6.2
+nvidia-nccl-cu12==2.21.5
+nvidia-nvjitlink-cu12==12.4.127
+nvidia-nvtx-cu12==12.4.127
+packaging @ file:///croot/packaging_1734472117206/work
+pandas @ file:///root/mechanism/offline_wheels/pandas-3.0.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl#sha256=0704044b676496b8350e023b09f174a26772456c974a2b11c36bebb558c9490d
+pillow @ file:///root/mechanism/offline_wheels/pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl#sha256=42d63be3af4f9b951b199b0a9d23365d37ab14687e6d77b74940432c8515c4ca
+platformdirs @ file:///work/perseverance-python-buildout/croot/platformdirs_1701732573265/work
+pluggy @ file:///croot/pluggy_1733169602837/work
+protobuf @ file:///root/mechanism/offline_wheels/protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl#sha256=89f23aa53c24553a2416fd4fd1ec06f74fa42b14b546d8883128813f775bbfd2
+psutil==7.2.2
+pycosat @ file:///croot/pycosat_1736868416091/work
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+pydantic @ file:///croot/pydantic_1734736067156/work
+pydantic_core @ file:///croot/pydantic-core_1734726052986/work
+Pygments @ file:///work/perseverance-python-buildout/croot/pygments_1698846270603/work
+pyparsing @ file:///root/mechanism/offline_wheels/pyparsing-3.3.3-py3-none-any.whl#sha256=ece8c00a69cf01b45d0b1dedabb469c90d8caf996d4fda40f147627a122849a4
+PySocks @ file:///work/perseverance-python-buildout/croot/pysocks_1698845478203/work
+python-dateutil==3.0.0
+PyYAML==6.0.3
+regex @ file:///root/mechanism/offline_wheels/regex-2026.9.29-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl#sha256=39ab5894d971f9ac68baa6eca5c50387db579cfcacf36ae8df3feceb1815e6d0
+requests @ file:///croot/requests_1730999120400/work
+rich @ file:///croot/rich_1732638981168/work
+ruamel.yaml @ file:///croot/ruamel.yaml_1727980156079/work
+ruamel.yaml.clib @ file:///croot/ruamel.yaml.clib_1727769819935/work
+safetensors @ file:///root/mechanism/offline_wheels/safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl#sha256=fd6f3f93c9a0a7cc2788ee63fb763353d4bd2e89b0751bc78fcf7dda00bea774
+scikit-learn @ file:///root/mechanism/offline_wheels/scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl#sha256=e5d7b18a5b9dca241a74695f3275fa4c895a9dadc72b3d8df5fa9d1083c9b83e
+scipy @ file:///root/mechanism/offline_wheels/scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl#sha256=f55fa87b6c612ecd6b058f167c53231b1d14e412efe361d3d6e38b3631c73218
+seaborn @ file:///root/mechanism/offline_wheels/seaborn-0.13.2-py3-none-any.whl#sha256=636f8336facf092165e27924f223d3c62ca560b1f2bb5dff7ab7fad265361987
+sentencepiece @ file:///root/mechanism/offline_wheels/sentencepiece-0.2.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl#sha256=c8a168b040bc61681293f79a949b5d911c8e25086f4260285b8d97ab5f1195da
+setuptools==75.8.0
+shellingham @ file:///root/mechanism/offline_wheels/shellingham-1.5.4-py2.py3-none-any.whl#sha256=7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686
+six==1.17.0
+sympy==1.13.1
+threadpoolctl @ file:///root/mechanism/offline_wheels/threadpoolctl-3.7.0-py3-none-any.whl#sha256=cd8b60b5641b45c67bbf73c64c843235fc2d8a480c87389f52f5dbee893b86be
+tokenizers @ file:///root/mechanism/offline_wheels/tokenizers-0.23.3-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl#sha256=376851d22bcf9d650a5c3090bb83e6cf9e895fbf0595369fa4cd43c1f69b5f87
+torch==2.6.0+cu124
+torchvision==0.21.0+cu124
+tqdm @ file:///root/mechanism/offline_wheels/tqdm-4.70.1-py3-none-any.whl#sha256=c293e525e6fef9c20e8728fd4612df02a0aa31bb5fe91ecd93e123b1b7bffa73
+transformers @ file:///root/mechanism/offline_wheels/transformers-5.18.0-py3-none-any.whl#sha256=d79e5a515a572ee3deb33eb0d578be47d91e70c75d54cf21bf6eede6edef14a9
+triton==3.2.0
+truststore @ file:///croot/truststore_1736550121485/work
+typer @ file:///root/mechanism/offline_wheels/typer-0.27.3-py3-none-any.whl#sha256=e50022f28b82a86313e54501317a1db64bf8f8d036ff8cfe5ca7e47675454aff
+typing_extensions==4.16.0
+tzdata @ file:///root/mechanism/offline_wheels/tzdata-2026.5-py2.py3-none-any.whl#sha256=b683bd1b6659ddcd810ff02ad09ba821d4bf1065072805063eb35c49617905ac
+urllib3 @ file:///croot/urllib3_1737133630106/work
+wheel==0.45.1
+zstandard @ file:///croot/zstandard_1731356346222/work

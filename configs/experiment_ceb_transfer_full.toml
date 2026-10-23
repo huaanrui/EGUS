@@ -1,0 +1,13 @@
+seed = 20261013
+model_path = 'F:\LLMs\Qwen3-1.7B'
+source_dir = 'research/sources/20261013/CEB'
+source_commit = '436943b78fdda84e0fc411e994eecd5646187f17'
+fit_dir = 'results/fairsteer_improve_20261013_v2'
+output_dir = 'results/ceb_transfer_20261013_v2'
+layer = 18
+batch_size = 32
+max_new_tokens = 512
+max_input_tokens = 2048
+prompt_format = 'qwen_chat_no_think'
+scopes = ['prefill', 'every_step']
+smoke_per_category = 2

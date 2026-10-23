@@ -1,0 +1,15 @@
+seed = 20261015
+model_path = 'F:\LLMs\Qwen3-1.7B'
+output_dir = 'results/identity_path_20261015_v1'
+data_dir = 'data/prepared/identity_path_20261015_v1'
+source_data = 'data/prepared/identity_combo_20261016_v1'
+source_dir = 'results/identity_combo_20261016_v1'
+batch_size = 8
+cpu_threads = 4
+bootstrap_replicates = 4000
+layer_sites = 4
+head_shortlist = 12
+final_heads = 4
+control_pairs = 64
+generation_pairs = 64
+

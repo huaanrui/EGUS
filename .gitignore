@@ -1,0 +1,38 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.uv-cache/
+results/
+data/raw/
+data/prepared/
+artifacts/
+
+# Machine-specific assets and unpublished manuscript working files
+/logs/
+/offline_wheels/
+/models/
+/paper/
+/archive/
+/research/sources/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.safetensors
+*.gguf
+*.pt
+*.pth
+*.bin
+*.partial
+*.tar
+*.tar.gz
+*.zip
+.DS_Store

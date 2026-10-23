@@ -1,0 +1,19 @@
+seed = 20261013
+generation_dir = 'results/ceb_transfer_20261013_v2'
+output_dir = 'results/ceb_local_judge_20261013_v1'
+batch_size = 8
+max_input_tokens = 2048
+max_new_tokens = 16
+retry_new_tokens = 32
+bootstrap_replicates = 2000
+prompt_sensitivity_rows = 64
+
+[[judges]]
+name = 'minicpm5_2b'
+model_path = 'F:\LLMs\MiniCPM5-2B'
+role = 'primary'
+
+[[judges]]
+name = 'qwen3_1_7b'
+model_path = 'F:\LLMs\Qwen3-1.7B'
+role = 'secondary_same_family_as_generator'

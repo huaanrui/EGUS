@@ -1,0 +1,13 @@
+seed = 20261015
+model_path = 'F:\LLMs\Qwen3-1.7B'
+output_dir = 'results/identity_causal_20261015_v3'
+data_dir = 'data/prepared/identity_causal_20261015_v3'
+fit_pairs = 96
+dev_pairs = 48
+batch_size = 8
+cpu_threads = 4
+top_sites = 3
+bootstrap_replicates = 4000
+selection_tolerance = 0.02
+strengths = [0.5, 1.0]
+

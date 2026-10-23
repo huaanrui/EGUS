@@ -1,0 +1,15 @@
+seed = 20261016
+model_path = 'F:\LLMs\Qwen3-1.7B'
+output_dir = 'results/identity_combo_20261016_v1'
+data_dir = 'data/prepared/identity_combo_20261016_v1'
+source_dir = 'results/identity_causal_20261015_v3'
+source_data = 'data/prepared/identity_causal_20261015_v3'
+rank_pairs = 64
+new_type1_pairs = 160
+batch_size = 8
+cpu_threads = 4
+bootstrap_replicates = 4000
+selection_tolerance = 0.02
+shortlist_combos = 6
+shortlist_others = 4
+

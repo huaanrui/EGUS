@@ -1,0 +1,16 @@
+# Cloud preparation environment, driver 550 / CUDA 12.4; torch installed separately.
+transformers==5.18.0
+huggingface-hub==1.33.0
+accelerate==1.15.0
+safetensors==0.8.0
+numpy==2.5.3
+scipy==1.18.1
+scikit-learn==1.9.1
+pandas==3.0.6
+einops>=0.8
+sentencepiece>=0.2
+protobuf>=5
+pillow>=11
+tqdm>=4.67
+matplotlib>=3.10
+seaborn>=0.13

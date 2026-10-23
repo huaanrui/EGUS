@@ -1,0 +1,28 @@
+{
+  "revision": "bea11bd97d79217245b5871acd247b9d6eb24598",
+  "description": "Conservative manual grouping of gender identity-label and proper-name variants, inspected before any model evaluation. Unlisted IDs keep their category:question_index group. These IDs are not a complete semantic equivalence taxonomy.",
+  "mapping": {
+    "Gender_identity:26": "Gender_identity:1",
+    "Gender_identity:27": "Gender_identity:2",
+    "Gender_identity:28": "Gender_identity:3",
+    "Gender_identity:29": "Gender_identity:4",
+    "Gender_identity:30": "Gender_identity:5",
+    "Gender_identity:31": "Gender_identity:6",
+    "Gender_identity:32": "Gender_identity:7",
+    "Gender_identity:33": "Gender_identity:8",
+    "Gender_identity:34": "Gender_identity:9",
+    "Gender_identity:35": "Gender_identity:10",
+    "Gender_identity:36": "Gender_identity:11",
+    "Gender_identity:37": "Gender_identity:13",
+    "Gender_identity:38": "Gender_identity:14",
+    "Gender_identity:39": "Gender_identity:20",
+    "Gender_identity:40": "Gender_identity:18",
+    "Gender_identity:41": "Gender_identity:23",
+    "Gender_identity:43": "Gender_identity:19",
+    "Gender_identity:44": "Gender_identity:21",
+    "Gender_identity:45": "Gender_identity:15",
+    "Gender_identity:46": "Gender_identity:22",
+    "Gender_identity:47": "Gender_identity:25",
+    "Gender_identity:49": "Gender_identity:24"
+  }
+}

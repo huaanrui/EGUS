@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "bibliography_entries": 24,
+  "distinct_cited_keys": 24,
+  "unresolved_citations": [],
+  "unused_entries": [],
+  "draft_word_count_approx": 904,
+  "checks": [
+    "unique bibliography keys",
+    "required metadata",
+    "citation resolution",
+    "balanced BibTeX braces"
+  ],
+  "latex_compiled": false,
+  "experiments_run": false
+}
