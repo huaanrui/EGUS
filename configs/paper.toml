@@ -1,4 +1,4 @@
-# paper: see docs/PROTOCOL.md and docs/BASELINES.md.
+# paper: see REPRODUCING.md and REPRODUCING.md.
 data_dir = "data/prepared"
 models_root = "models"
 output_dir = "runs/paper"

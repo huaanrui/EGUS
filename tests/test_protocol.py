@@ -71,7 +71,7 @@ class EvidenceProtocol(unittest.TestCase):
         self.assertEqual([label_for(row, p) for p in [0, 1, 2]], [0, -1, 1])
 
     def test_probe_order_matches_frozen_training_sample(self):
-        training = read(ROOT / "reproducibility/training.json")
+        training = read(ROOT / "data/training.json")
         for record in training.values():
             positions = training_positions(record)
             self.assertEqual([record["indices"][i] for i in positions], record["probe_indices"])

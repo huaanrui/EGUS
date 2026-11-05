@@ -1,4 +1,4 @@
-# author_baselines: see docs/PROTOCOL.md and docs/BASELINES.md.
+# author_baselines: see REPRODUCING.md and REPRODUCING.md.
 data_dir = "data/prepared"
 models_root = "models"
 output_dir = "runs/author_baselines"

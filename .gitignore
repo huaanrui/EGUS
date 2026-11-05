@@ -12,7 +12,8 @@ dist/
 /data/prepared/
 /models/
 /runs/
-/results/
+/results/*
+!/results/paper_tables.json
 /artifacts/
 /logs/
 /offline_wheels/
@@ -32,3 +33,10 @@ dist/
 *.tar
 *.tar.gz
 .DS_Store
+
+# Generated predictions and local release tooling
+*.npz
+/scripts/
+/benchmarks/
+/reproducibility/
+/docs/

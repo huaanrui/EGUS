@@ -14,7 +14,7 @@ from ..io import read, sha
 
 
 def fetch_sources(verify_only=False):
-    manifest = read(ROOT / "reproducibility/authors.json")
+    manifest = read(ROOT / "configs/authors.json")
     repos = {"FairSteer": "LiYichen99/FairSteer", "KnowBias": "JP-25/KnowBias"}
     for relative, expected in manifest["files"].items():
         path = ROOT / relative
@@ -64,7 +64,7 @@ class FairSteer:
             from cuml.linear_model import LogisticRegression
         except ImportError as error:
             raise ImportError(
-                "The author-source profile requires the Linux cuML environment; see docs/BASELINES.md"
+                "The author-source profile requires the Linux cuML environment; see REPRODUCING.md"
             ) from error
         from sklearn.metrics import accuracy_score
         from tqdm import tqdm

@@ -31,9 +31,7 @@ def checksum(path):
 
 
 def download(models_root, models=None, endpoint="https://hf-mirror.com"):
-    manifest = json.loads(
-        (Path(__file__).resolve().parents[1] / "reproducibility/models.json").read_text()
-    )
+    manifest = json.loads((Path(__file__).resolve().parents[1] / "configs/models.json").read_text())
     if models:
         unknown = set(models) - {m["name"] for m in manifest["models"]}
         if unknown:

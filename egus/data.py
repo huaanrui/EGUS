@@ -28,7 +28,7 @@ def _store(path, blob, expected):
 
 
 def prepare(raw_dir=None, data_dir=None, offline=False):
-    manifest = read(ROOT / "reproducibility/data.json")
+    manifest = read(ROOT / "data/manifest.json")
     raw = Path(raw_dir or ROOT / "data/raw")
     destination = Path(data_dir or ROOT / "data/prepared")
     inputs = {}
@@ -70,7 +70,7 @@ def prepare(raw_dir=None, data_dir=None, offline=False):
     if len(source) != manifest["source_rows"]:
         raise ValueError("Unexpected BBQ corpus size")
     lookup = {r["uid"]: r for r in source}
-    mapping = read(ROOT / "reproducibility/family_mapping.json")["mapping"]
+    mapping = read(ROOT / "data/family_mapping.json")["mapping"]
     for filename, spec in manifest["files"].items():
         values = []
         for uid in spec["uids"]:
@@ -82,14 +82,14 @@ def prepare(raw_dir=None, data_dir=None, offline=False):
             json.dumps(r, ensure_ascii=False) + manifest["jsonl_newline"] for r in values
         ).encode("utf-8")
         _store(destination / filename, blob, spec["sha256"])
-    blob = (ROOT / "reproducibility/training.json").read_bytes()
+    blob = (ROOT / "data/training.json").read_bytes()
     _store(destination / "training.json", blob, manifest["training_sha256"])
     return {"prepared": len(manifest["files"]) + 1, "data_dir": str(destination)}
 
 
 def audit(data_dir, seeds):
     data = Path(data_dir)
-    manifest = read(ROOT / "reproducibility/data.json")
+    manifest = read(ROOT / "data/manifest.json")
     names = ["validation.jsonl", "test.jsonl"] + [f"train_{s}.jsonl" for s in seeds]
     for name in names:
         if sha(data / name) != manifest["files"][name]["sha256"]:

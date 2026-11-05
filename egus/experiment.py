@@ -26,7 +26,7 @@ def prepare(config):
     output = Path(config["output_dir"])
     output.mkdir(parents=True, exist_ok=True)
     audit(config["data_dir"], config["seeds"])
-    registry = read(ROOT / "reproducibility/models.json")
+    registry = read(ROOT / "configs/models.json")
     models = {}
     for spec in config["models"]:
         expected = next(m for m in registry["models"] if m["name"] == spec["name"])
@@ -60,7 +60,7 @@ def prepare(config):
         from .baselines.author import fetch_sources
 
         fetch_sources(verify_only=True)
-        plan["author_sources"] = read(ROOT / "reproducibility/authors.json")
+        plan["author_sources"] = read(ROOT / "configs/authors.json")
     path = output / "plan.json"
     if path.exists():
         if read(path) != plan:

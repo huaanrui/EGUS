@@ -16,11 +16,11 @@ def main():
     download.add_argument("--models-root", default="models")
     download.add_argument("--endpoint", default="https://hf-mirror.com")
     sub.add_parser("fetch-sources", help="Fetch and verify pinned author source files")
-    verify = sub.add_parser(
-        "verify", help="Recompute released tables on CPU without loading a model"
-    )
-    verify.add_argument("--statistics", action="store_true")
-    verify.add_argument("--output")
+    summary = sub.add_parser("summarize", help="Build paper tables from completed experiment runs")
+    summary.add_argument("--evidence-dir", default="runs/paper")
+    summary.add_argument("--baseline-dir", default="runs/author_baselines")
+    summary.add_argument("--data-dir", default="data/prepared")
+    summary.add_argument("--output", default="runs/tables")
     p = sub.add_parser("run", help="Run the validation-selected paper experiments")
     p.add_argument("--config", default="configs/paper.toml")
     p.add_argument("--models", nargs="+")
@@ -32,10 +32,10 @@ def main():
         from .data import prepare
 
         result = prepare(args.raw_dir, args.data_dir, args.offline)
-    elif args.command == "verify":
-        from .verify import verify
+    elif args.command == "summarize":
+        from .results import summarize
 
-        result = verify(args.statistics, args.output)
+        result = summarize(args.evidence_dir, args.baseline_dir, args.data_dir, args.output)
     elif args.command == "fetch-sources":
         from .baselines.author import fetch_sources
 

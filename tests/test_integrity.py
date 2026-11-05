@@ -87,9 +87,7 @@ class PublicSourceIntegrity(unittest.TestCase):
 
     def test_vendored_fairsteer_is_unchanged(self):
         for relative, expected in (
-            __import__("json")
-            .loads((ROOT / "reproducibility/authors.json").read_text())["files"]
-            .items()
+            __import__("json").loads((ROOT / "configs/authors.json").read_text())["files"].items()
         ):
             if "/FairSteer/" in relative:
                 self.assertEqual(sha(ROOT / relative), expected)
