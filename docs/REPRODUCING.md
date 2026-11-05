@@ -1,109 +1,61 @@
-# Reproducing the experiments
+# Reproduction
 
-## Score verification without models
+Run commands from the repository checkout. Data and model downloads use pinned revisions with SHA256 checks. No machine-specific drive letter or server directory is required by the code.
 
-Install NumPy, then run:
-
-```bash
-python scripts/release/verify_results.py
-```
-
-Thirty committed prediction files cover six models, five resamples, twelve policies
-and 704 questions. The checker recomputes overall and condition-specific mean accuracy
-and sample SD. It does not replay hidden-state inference.
-
-## Data preparation
+## CPU verification
 
 ```bash
-python scripts/release/prepare_bbq.py
+python -m venv .venv
+# Activate this environment using your shell's normal command.
+python -m pip install -e .
+python -m egus verify --statistics --output runs/verification.json
+python -m unittest discover -s tests -v
 ```
 
-The standard-library script downloads eleven pinned BBQ category files, supplemental
-metadata and the historical FairSteer MMLU utility source. It reconstructs 58,492 source
-rows and nine prepared JSONL files plus `training.json`. Prepared data go under
-`data/prepared/egus_bbq_v1`; the source goes under `data/prepared/egus_bbq_source`.
-Every input and output hash must match the manifest.
+`verify` is independent of GPU inference and confirms the released prediction summaries. It recalculates the primary confidence intervals and adjusted tests when `--statistics` is supplied. It does not validate inference by rerunning the models.
 
-Ordered sample identifiers select the subsets. `training.json` records nested budgets,
-direction UIDs and Unknown vocabularies without question text. CRLF bytes intentionally
-match the original Windows files, including on Linux. Existing different files are rejected.
+## Main experiment
 
-For offline use, prepopulate raw files at paths in `reproducibility/bbq/manifest.json`
-and add `--offline`. Flags `--raw-dir`, `--data-dir`, `--source-dir` allow an independent
-validation copy. Attribution is recorded in `THIRD_PARTY_NOTICES.md`.
-
-## GPU environment
-
-The tested cloud profile is Python 3.12.9, PyTorch 2.6.0+cu124, Transformers 5.18.0
-and scikit-learn 1.9.1. The server GPU reports about 48 GiB. Use a dedicated environment:
+Install PyTorch with CUDA support appropriate to the machine, then the dependencies in `requirements/paper.txt`. Paper captures used PyTorch 2.14.1+cu132 on the local GPU and 2.6.0+cu124 on the server, with Transformers 5.18.0, scikit-learn 1.9.1 and NumPy 2.5.3. Floating-point kernels and hardware can affect individual predictions. New runs record their environment and checkpoint hashes.
 
 ```bash
-conda create -n egus python=3.12.9 -y
-conda activate egus
-python -m pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
-python -m pip install -r scripts/cloud/requirements.txt
-python -m pip check
-export PYTHONPATH="$PWD"
-export TOKENIZERS_PARALLELISM=false
+python -m pip install -r requirements/paper.txt
+python -m pip install -e . --no-deps
+python -m egus prepare-data
+python -m egus download-models --models qwen3 --models-root models
+python -m egus run --config configs/paper.toml --models qwen3 --models-root models
 ```
 
-`environments/cloud.lock.txt` preserves the original `pip freeze`, including historical
-local wheel paths. It is provenance, rather than a portable installation input.
-The requirement list above pins the cloud scientific packages. Root `pyproject.toml`
-and `uv.lock` preserve the distinct local Python 3.13/PyTorch 2.14 environment.
+Supported IDs: `qwen3`, `minicpm5`, `qwen25`, `qwen3_8b`, `qwen35_4b`, `qwen35_9b`. For an existing model store, pass its parent with `--models-root`. Directory names must match each checkpoint name in the configuration. A run verifies required checkpoint files before inference. Both Windows and Linux use the same experiment entry.
 
-## Models and smoke checks
+By default, all selected models complete fitting and validation selection before any selected model is evaluated. The phases can also be invoked explicitly:
 
 ```bash
-python scripts/cloud/download_models.py --manifest reproducibility/cloud_models.json --root /hy-tmp/models
-python scripts/cloud/smoke_models.py --root /hy-tmp/models
+python -m egus run --config configs/paper.toml --models qwen3 --stage fit
+python -m egus run --config configs/paper.toml --models qwen3 --stage evaluate
 ```
 
-Downloads use hf-mirror with pinned official revisions. The downloader checks sizes
-and available upstream weight hashes, then writes `download_verified.json`. Keep
-roughly 45 GB of weights plus working space outside the checkout. Smoke checks test
-hidden-state extraction and interventions and write ignored logs under `logs/`.
+Use identical arguments in both phases. An output directory is bound to its configuration and source hashes; changing methods, seeds or model selection requires a new `--output` directory. Interrupted captures, probe fits and counterfactual scores can resume. Do not edit source files while a run is active.
 
-## Independent BBQ run
+The complete all-layer run stores substantial activation caches, especially for the 8B/9B models. Reserve disk space for checkpoints and all seed captures. The default batch size is eight; use a new configuration/output if memory requires a smaller batch. This is a new numerical execution, and results should carry that configuration.
 
-Review `configs/reproduction_bbq.toml`. Set model paths to verified checkpoint folders
-and choose a new `output_dir` before starting. Defaults cover the three cloud models.
-Keep the config unchanged once its plan freezes.
+## FairSteer and KnowBias
+
+Use a separate Linux Python 3.12 environment. Install a compatible CUDA PyTorch build (the baseline execution used PyTorch 2.6.0 with CUDA 12.4), then:
 
 ```bash
-python scripts/release/run_bbq.py --stage prepare
-python scripts/release/run_bbq.py --stage smoke
-python scripts/release/run_bbq.py --stage all
+python -m pip install -r requirements/author-linux.txt
+python -m pip install -e . --no-deps
+python -m egus fetch-sources
+python -m egus prepare-data
+python -m egus download-models --models-root models
+python -m egus run --config configs/author_baselines.toml --models-root models
 ```
 
-Preparation validates source/data/model hashes. The full stage trains every model
-and seed, freezes all selections, then evaluates. Resume reuses unchanged hashes
-and existing shards. An exclusive lock prevents simultaneous launches. After an
-unclean exit, verify no runner remains before removing `release_runner.lock`.
+This profile requires cuML; it will not substitute a CPU solver. KnowBias sources are fetched at the pinned revision and verified before use. GPU workloads run sequentially across checkpoints. The same `--models`, `--stage` and `--output` options apply to this profile.
 
-The launcher reuses the audited fitting and response functions. Full GPU reproduction
-ran through the original cloud entry. The new wrapper has orchestration and data
-compatibility checks, without a second full GPU campaign during repository preparation.
+## Outputs
 
-Earlier small-model configs remain available. Their historical launcher also prepares
-transfer panels and reuses old seed assets, so it is not a fresh-clone command. For
-BBQ-only runs on these models, copy the reproduction config, set checkpoint paths
-and fixed dimensions from `docs/PROTOCOL.md`, and verify the checkpoints separately.
-The new wrapper's adapter has been exercised on the cloud models; any new small-model
-run requires its own smoke checks and source snapshot.
+Every run contains `plan.json` and a snapshot of the executing package. Per-model folders contain clean captures, event logs, fitted probes/directions, validation candidates, a selection lock, test predictions and metrics. Main aggregates are written to `summary.json`. Author-source KnowBias has one deterministic fit per model with its own selection and prediction files.
 
-## CPU implementation tests
-
-These main protocol tests need the scientific environment, without downloaded data:
-
-```bash
-python -m unittest discover -s tests -p test_cloud_bbq.py -v
-python -m unittest discover -s tests -p test_evidence_validation.py -v
-python -m unittest discover -s tests -p test_evidence_story.py -v
-python -m unittest discover -s tests -p test_release_runner.py -v
-```
-
-These 20 tests cover gate/action consistency, thresholds, sample isolation and selection
-integrity, including train-before-evaluation ordering in the new launcher. The original
-178-test historical suite also passes on the research workstation;
-some tests require external historical datasets or downloaded author files.
+The main runner can execute from restored inputs without historical research modules or old caches. `benchmarks/` contains frozen reference outputs for comparison. Running a new configuration never overwrites these reference artifacts.

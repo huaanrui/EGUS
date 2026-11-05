@@ -1,33 +1,29 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "mechanism"
+name = "egus"
 version = "0.1.0"
-description = "Small language model mechanistic interpretability experiments"
+description = "Evidence-Gated Unknown Selection and controlled BBQ steering comparisons"
 readme = "README.md"
-requires-python = ">=3.13,<3.14"
+requires-python = ">=3.12"
+license = "MIT"
 dependencies = [
-    "accelerate>=1.10",
-    "einops>=0.8",
-    "huggingface-hub>=1.5,<2",
-    "matplotlib>=3.10",
-    "numpy>=2.2",
-    "pandas>=2.2",
-    "safetensors>=0.6",
-    "scikit-learn>=1.7",
-    "scipy>=1.16",
-    "seaborn>=0.13",
-    "sentencepiece>=0.2",
-    "torch>=2.12,<3",
-    "tqdm>=4.67",
-    "transformers>=5.6.2,<6",
+  "numpy>=2.2,<3", "scipy>=1.15,<2", "scikit-learn>=1.6,<2",
+  "joblib>=1.4", "threadpoolctl>=3.5"
 ]
 
-[dependency-groups]
-dev = ["ipykernel>=6.30"]
+[project.optional-dependencies]
+inference = ["torch>=2.6,<3", "transformers==5.18.0", "accelerate>=1.10", "safetensors>=0.6", "sentencepiece>=0.2", "einops>=0.8", "tqdm>=4.67"]
+dev = ["ruff>=0.12"]
 
-[tool.uv.sources]
-torch = { index = "pytorch-cu132" }
+[tool.setuptools.packages.find]
+include = ["egus*"]
 
-[[tool.uv.index]]
-name = "pytorch-cu132"
-url = "https://download.pytorch.org/whl/cu132"
-explicit = true
+[tool.ruff]
+line-length = 100
+exclude = ["third_party", "archive"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

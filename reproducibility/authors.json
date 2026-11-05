@@ -1,0 +1,15 @@
+{
+  "revisions": {
+    "FairSteer": "0545cdbaa71b3301030accf1b98130820e08026f",
+    "KnowBias": "ccfd3daea0067707cbda6238839206c194794881"
+  },
+  "files": {
+    "third_party/FairSteer/get_steering_vectors.py": "c6f1a3eb67643472ac07d27c14c6c24d2242ab85b0c51274ee921d89815065df",
+    "third_party/FairSteer/get_probes.py": "0abcf71dd835297b2ab1723a8313602d91e76ad03ee2606cb08828227ea26998",
+    "third_party/FairSteer/select_layer.py": "c05ff8e6267f7066137da0522fb0ff1dd69aac288567893e016a877cef4567e3",
+    "third_party/FairSteer/LICENSE": "6ecd32369cfd4dcf2e8a7d568f0afdd83b244e1d05d5aacef59e47e4a41cf856",
+    "third_party/KnowBias/kn_code/knowledge_neurons.py": "6750eb5fb3eafea0db9c2114364fa304973ba086f4887d6b4006f845ed85e91a",
+    "third_party/KnowBias/kn_code/patch.py": "eefaff939fd0a8f6ffe25f7c2f11b8400decb3735699faadabef99c7a2bce171",
+    "third_party/KnowBias/data/know_bias_data_all_combine_extend.csv": "e373d2b8ff9cdcb07cdb6bad26da7566d0a6241c0d3c15240b900b6dee083729"
+  }
+}

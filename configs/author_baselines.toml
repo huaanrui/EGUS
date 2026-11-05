@@ -1,0 +1,59 @@
+# author_baselines: see docs/PROTOCOL.md and docs/BASELINES.md.
+data_dir = "data/prepared"
+models_root = "models"
+output_dir = "runs/author_baselines"
+methods = ["fairsteer", "knowbias"]
+fairsteer_backend = "cuml"
+selection_mode = "grid"
+seed = 20261017
+seeds = [20261017, 20261018, 20261019, 20261020, 20261021]
+alphas = [0.0, 0.1, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0]
+batch_size = 8
+cpu_threads = 4
+max_tokens = 2048
+probe_C = 1.0
+probe_max_iter = 10000
+probe_tol = 0.0001
+gate_fpr_limit = 0.02
+ig_steps = 20
+ig_batch = 4
+kb_concepts = ["math", "science", "leadership", "emotional intelligence", "creativity"]
+kb_threshold = 0.1
+kb_consistency = [0.05, 0.1]
+kb_strengths = [1.0, 1.5, 2.0, 3.5, 5.0]
+
+[[models]]
+name = "qwen3"
+checkpoint = "Qwen3-1.7B"
+layers = 28
+hidden_size = 2048
+
+[[models]]
+name = "minicpm5"
+checkpoint = "MiniCPM5-2B"
+layers = 42
+hidden_size = 2048
+
+[[models]]
+name = "qwen25"
+checkpoint = "Qwen2.5-3B-Instruct"
+layers = 36
+hidden_size = 2048
+
+[[models]]
+name = "qwen3_8b"
+checkpoint = "Qwen3-8B"
+layers = 36
+hidden_size = 4096
+
+[[models]]
+name = "qwen35_4b"
+checkpoint = "Qwen3.5-4B"
+layers = 32
+hidden_size = 2560
+
+[[models]]
+name = "qwen35_9b"
+checkpoint = "Qwen3.5-9B"
+layers = 32
+hidden_size = 4096

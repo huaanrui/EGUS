@@ -1,99 +1,68 @@
-# EGUS: Evidence-Gated Unknown Selection
+# Evidence-Gated Unknown Selection (EGUS)
 
-Research code for evidence-guided response selection in bias-sensitive question answering.
-EGUS reads a frozen language model's final-prompt hidden state with a logistic evidence
-probe. When the probe detects insufficient context, the policy selects the input's
-Unknown option. Other predictions are retained.
+Paper-aligned code for evidence-aware response selection on BBQ. EGUS reads a model's hidden state with a linear evidence classifier and selects the unknown option when the evidence gate activates.
 
-The experiments separate the evidence detector from its downstream action. EGUS and
-evidence-gated steering use the **same fitted detector and threshold**. A surface-feature
-classifier supplies a separate control using ten text statistics instead of hidden states.
+This repository has one implementation shared by all six checkpoints. The main configuration searches every transformer block. Steering also searches strengths in `{0, 0.1, 0.5, 1, 1.5, 2, 3, 4}`. Configuration selection uses the validation set.
 
-## Results
+## Recompute the reported tables without a GPU
 
-BBQ accuracy (%), averaged over five training resamples of 2,200 questions. Development
-has 352 questions; the shared evaluation set has 704 questions from 51 separated
-question families. These are repeated fits on a historical evaluation set.
-
-| Model | Base | Local FairSteer-style | Same-gate steering | EGUS | Surface-direct |
-|---|---:|---:|---:|---:|---:|
-| Qwen3-1.7B | 56.68 | 65.45 | 78.95 | **79.09** | 75.99 |
-| MiniCPM5-2B | 43.47 | 43.24 | 43.10 | **84.43** | 78.27 |
-| Qwen2.5-3B-Instruct | 73.01 | 73.38 | 78.61 | **81.28** | 80.97 |
-| Qwen3-8B | 75.43 | 76.45 | 78.27 | **82.64** | 81.16 |
-| Qwen3.5-4B | 74.72 | 75.60 | 80.74 | **91.36** | 88.98 |
-| Qwen3.5-9B | 77.41 | 77.53 | 77.95 | **92.81** | 90.74 |
-
-The gains concentrate on insufficient-context questions. Surface-direct is competitive;
-EGUS's advantage over it does not pass the applicable Holm correction for any model.
-The local FairSteer-style baseline is an adaptation with documented supervision and
-solver differences. These results characterize the tested BBQ protocol, rather than
-establishing general debiasing or open-generation performance.
-
-Machine-readable results include training-resample variation and conditional accuracy in
-[`benchmarks/`](benchmarks). Thirty prediction files support independent recomputation.
-The two campaigns retain their own original multiple-comparison families.
-
-## Start here
-
-- [Reproduce BBQ experiments](docs/REPRODUCING.md): setup, pinned data, models, launch and verification.
-- [Code organization and local/cloud workflow](docs/CODE_ORGANIZATION.md).
-- [Protocol and interpretation](docs/PROTOCOL.md).
-- [Third-party sources](THIRD_PARTY_NOTICES.md).
-- [Historical research index](research/CODE_MAP.md): earlier component and transfer explorations.
-
-The primary fresh-run entry is `scripts/release/run_bbq.py`. Historical entry points remain
-available for provenance. `main.py` and `python -m mechanism` run an early pilot.
-
-## Verify released scores without a GPU
-
-Python and NumPy are sufficient:
+From this checkout:
 
 ```bash
-python scripts/release/verify_results.py
+python -m pip install -e .
+python -m egus verify --statistics --output runs/verification.json
 ```
 
-This independently checks 253,440 predictions across six models, including ambiguous and
-sufficient-context accuracies. It does not rerun the language models.
+The release includes question identifiers, labels and compressed predictions, without distributing the BBQ question text. This command checks all released prediction hashes, recalculates accuracy and verifies the main clustered comparisons. It does not rerun model inference.
 
-## Restore exact experiment inputs
+## Run the experiments
 
-This step uses only the Python standard library:
+Install a CUDA-enabled PyTorch build for your machine, then:
 
 ```bash
-python scripts/release/prepare_bbq.py
+python -m pip install -r requirements/paper.txt
+python -m pip install -e . --no-deps
+python -m egus prepare-data
+python -m egus download-models --models qwen3 --models-root models
+python -m egus run --config configs/paper.toml --models qwen3 --models-root models
 ```
 
-It downloads pinned upstream files, reconstructs the source corpus, and restores five
-fit samples plus development/evaluation inputs. Every output must match its recorded
-SHA256. No dataset question text is redistributed here. Existing different data are
-never overwritten. See the reproduction guide for GPU setup and execution.
+Omit `--models qwen3` to select all checkpoints. Downloads use pinned revisions through hf-mirror by default; `--endpoint https://huggingface.co` selects the official endpoint. Each profile has its own output directory. Existing outputs are resumed only when the configuration, data and source fingerprints agree.
 
-The root `pyproject.toml` and `uv.lock` preserve the original Windows/Python 3.13 environment;
-the cloud campaign used Python 3.12 and PyTorch 2.6. These are distinct recorded profiles.
+| Profile | Paper methods |
+|---|---|
+| `configs/paper.toml` | EGUS, evidence-gated steering and matched-gate comparisons |
+| `configs/author_baselines.toml` | FairSteer with the authors' cuML functions, and KnowBias with author-source neuron attribution/enhancement |
 
-## Repository contents
+Both profiles contribute to the paper tables. The baseline profile requires a separate Linux/CUDA environment. See [baseline details](docs/BASELINES.md) and [installation](docs/REPRODUCING.md).
+
+## Reported main results
+
+Test accuracy (%), mean over five seeds. Full precision, conditional scores and selected configurations are in `benchmarks/main/summary.json`.
+
+| Method | Qwen3-1.7B | MiniCPM5-2B | Qwen2.5-3B | Qwen3-8B | Qwen3.5-4B | Qwen3.5-9B |
+|---|---:|---:|---:|---:|---:|---:|
+| Base | 56.68 | 43.47 | 72.87 | 75.43 | 74.72 | 77.41 |
+| KnowBias | 56.68 | 47.87 | 72.59 | 75.43 | 74.72 | 78.98 |
+| FairSteer | 65.63 | 75.23 | 74.23 | 77.53 | 78.10 | 78.38 |
+| Evidence steering | **79.57** | 83.35 | 80.48 | **82.30** | 83.89 | 79.52 |
+| EGUS | 79.12 | **83.98** | **81.11** | 81.65 | **90.09** | **92.10** |
+
+KnowBias uses one deterministic identification run per model. Other fitted policies use five seeds. Base refers to the baseline execution; the evidence execution's base predictions are also retained because two checkpoints have one changed answer each. See [protocol](docs/PROTOCOL.md).
+
+These are BBQ multiple-choice results. The implementation assumes a recognizable unknown option; it does not establish open-generation or cross-dataset effectiveness.
+
+## Layout
 
 ```text
-mechanism/            Shared experimental implementations and historical studies
-scripts/release/      Data restoration, fresh-run launcher, released-score verification
-scripts/cloud/        Pinned checkpoint downloads and model smoke checks
-configs/             Original frozen configs and a separate reproduction config
-reproducibility/      Input manifests, sample identifiers, training selections, model hashes
-benchmarks/           BBQ summaries and compact per-question predictions
-tests/                Protocol and implementation checks
-docs/                 Reproduction and maintenance documentation
-research/             Original protocols and research records
-environments/         Recorded cloud environment metadata
+egus/                 Shared data, model, gate, selection and evaluation code
+egus/baselines/       Adapters for pinned author functions
+configs/              Two paper experiment profiles
+reproducibility/      Dataset/model/source manifests and artifact hashes
+benchmarks/main/      Paper predictions, selected configurations and summaries
+third_party/FairSteer/ Unmodified MIT-licensed source functions
+tests/                Protocol, cache integrity and released-table checks
+docs/                 Reproduction instructions and mapping to the manuscript
 ```
 
-Weights, activation caches, raw datasets and SSH administration files stay outside Git.
-The manuscript working directory and retired local tools are also excluded.
-Original local and cloud result directories remain intact.
-
-## License and citation
-
-Original project code uses the [MIT license](LICENSE). Datasets and checkpoints retain
-their upstream terms; see [the source notices](THIRD_PARTY_NOTICES.md). Paper citation
-details will be added when available. This is a private preparation copy for a future
-code release.
+See [reproduction](docs/REPRODUCING.md), [protocol](docs/PROTOCOL.md), [paper mapping](docs/PAPER_MAP.md) and [validation](docs/VALIDATION.md). Run `python -m unittest discover -s tests -v` for CPU checks. Models and prepared dataset text are fetched separately and are excluded from Git. KnowBias source is fetched on demand and is not redistributed here.

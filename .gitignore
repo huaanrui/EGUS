@@ -1,29 +1,25 @@
-# Python-generated files
 __pycache__/
-*.py[oc]
+*.py[cod]
+*.egg-info/
+.venv/
+.ruff_cache/
+.uv-cache/
 build/
 dist/
-wheels/
-*.egg-info
-
-# Virtual environments
-.venv
-.uv-cache/
-results/
-data/raw/
-data/prepared/
-artifacts/
-
-# Machine-specific assets and unpublished manuscript working files
+/archive/
+/publication/
+/data/raw/
+/data/prepared/
+/models/
+/runs/
+/results/
+/artifacts/
 /logs/
 /offline_wheels/
-/models/
 /paper/
-/archive/
-/research/sources/
+/third_party/KnowBias/
 .env
 .env.*
-!.env.example
 *.pem
 *.key
 *.safetensors
@@ -32,7 +28,7 @@ artifacts/
 *.pth
 *.bin
 *.partial
+*.zip
 *.tar
 *.tar.gz
-*.zip
 .DS_Store
